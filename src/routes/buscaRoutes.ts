@@ -7,7 +7,7 @@ import { AuthController } from '../controllers/auth/AuthController';
 const router = Router();
 
 //Routes user
-router.post("/create", authMiddleware, new UserCreateController().handle);
+router.post("/create", new UserCreateController().handle);
 
 router.post("/login", new AuthController().handleLogin);
 
