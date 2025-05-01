@@ -29,7 +29,7 @@ model Transaction {
   id        String      @id @default(uuid())// ID da Transação (identificador único)
   dateTime         DateTime @default(now())              // Data e Hora da transação
   value            Float    // Valor da transação (quanto foi gasto ou recebido)
-  category         String   // Categoria (alimentação, transporte, moradia, lazer, etc.)
+    // Categoria (alimentação, transporte, moradia, lazer, etc.)
   transactionType  String   // Tipo de Transação (gasto ou receita)
   description      String   // Descrição (detalhes sobre o que foi comprado/recebido)
   paymentMethod    String   // Método de Pagamento (cartão de crédito, débito, dinheiro, transferência)
@@ -37,9 +37,22 @@ model Transaction {
   paymentForm      String   // Forma de Pagamento (parcela, pagamento único)
   receiptId        String?  // ID do Recibo/Nota Fiscal (opcional)
   userId           String     // ID do usuário (relacionamento com a tabela de usuários)
-  
+  categoryId       String 
+
   user             User     @relation(fields: [userId], references: [id]) // Relacionamento com a tabela de usuários
-  
+  category         Category @relation(fields: [categoryId], references: [id])
   @@map("transaction") // Índice para melhorar a busca por categoria
+}
+
+model Category{
+
+   id String  @id @default(uuid())
+   category String
+   createdAt  DateTime @default(now())
+   updatedAt DateTime @default(now())
+
+   transiction Transaction[]
+
+@@map("categories")
 }
 
